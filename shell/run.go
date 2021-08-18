@@ -56,8 +56,6 @@ func (cs *Shell) RunSupplier(rdr CommandSupplier) error {
 			return err
 		} else if err := cs.RunCommand(parsed); err != nil {
 			cs.Println("ERROR:", err)
-		} else if !cs.Quiet {
-			cs.Println("SUCCESS")
 		}
 	}
 }

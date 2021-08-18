@@ -41,6 +41,8 @@ func createMockTestShell() *shell.Shell {
 		},
 	}
 
+	var outputFunc func(out string) error
+
 	okMode := &shell.CommandMode{
 		Name:        "ok-mode",
 		Description: "this only has ok commands",
@@ -49,7 +51,7 @@ func createMockTestShell() *shell.Shell {
 				Name:        "noop",
 				Description: "this command is ok",
 				Flags:       42,
-				Handler:     shell.NoOpHandler(),
+				Handler:     func(_ []string) error { return outputFunc("SUCCESS") },
 			},
 		},
 		Delegate:    nil,
@@ -57,6 +59,10 @@ func createMockTestShell() *shell.Shell {
 
 	cs := shell.NewCommandShell("# ", []*shell.Command { makeErr }, okMode)
 	cs.Echo = true
+	outputFunc = func(out string) error {
+		cs.Println(out)
+		return nil
+	}
 	return cs
 }
 

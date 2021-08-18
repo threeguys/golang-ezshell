@@ -23,6 +23,11 @@ var (
 	ErrNoMatch = errors.New("no matching command found")
 )
 
+const (
+	FlagRequiresArgs = 0x01 // 0001
+	FlagOptionalArgs = 0x02 // 0010
+)
+
 type CommandHandler func([]string) error
 
 type Command struct {

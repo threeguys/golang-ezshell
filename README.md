@@ -22,7 +22,34 @@ go get github.com/threeguys/golang-ezshell
 ```
 
 # Examples
+See the [examples](examples) directory for a couple of simple examples. The [hello-ezshell](examples/hello-ezshell/main.go)
+is a very short, quick start on implementing a couple of commands to get you started. The [ezbash](examples/ezbash/main.go)
+example is a bit more in-depth, illustrating the ability to use different modes in order to have varying
+sets of commands available, depending on the mode.
 
+The most basic example is a null shell, with only the exit command available:
+
+```go
+package main
+
+import (
+	"github.com/threeguys/golang-ezshell/shell"
+	"log"
+	"os"
+)
+
+func main() {
+	sh := shell.NewCommandShell("$ ", []*shell.Command{
+		{
+			Name:        "exit",
+			Description: "quits the shell",
+			Flags:       0,
+			Handler:     func(_ []string) error { os.Exit(0); return nil },
+		},
+	})
+	log.Fatal(sh.Run())
+}
+```
 
 # Contributing
 Please feel free to post PRs and bugs, I will be responsive and fix what seems to be a problem (because it
